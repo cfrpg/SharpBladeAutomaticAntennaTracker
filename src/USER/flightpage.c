@@ -2,6 +2,10 @@
 
 void flight_init(u8 f)
 {
+	if(f)
+	{
+		return;
+	}
 	OledClear(0);
 	PagesDrawHeader(FlightPage,"Flight");
 	OledDispString(0,2,"Roll:",0);

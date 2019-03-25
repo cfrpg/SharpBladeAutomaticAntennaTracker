@@ -15,6 +15,7 @@ void OledDispOn(void);
 void OledDispOff(void);
 void OledSetPos(u8 x,u8 y);
 void OledClear(u8 c);
+void OledClearBuff(void);
 void OledRefresh(void);
 void OledSetChar(u8 x,u8 y,s8 c,u8 f);
 u8 OledSetString(u8 x,u8 y,s8 c[],u8 f);

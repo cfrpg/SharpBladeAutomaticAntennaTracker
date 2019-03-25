@@ -15,6 +15,7 @@ void keytest_init(u8 f)
 		keytest.c=500;
 		keytest.d=500;
 		keytest.e=0;
+		return;
 	}
 	OledClear(0);
 	PagesDrawHeader(KeyTestPage,"Test");

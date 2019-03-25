@@ -49,21 +49,6 @@ void getDist()
 		dir=2*PI+dir;
 	if(sysState.rmtlat<sysState.loclat)
 		dir=PI-dir;
-//	if(lat2>lat1 && lon2<lon1)
-//	{
-//		dir=PI-dir;
-//		
-//	}
-//	if(lat2>lat1 && lon2>lon1)
-//	{
-//		dir=PI-dir;
-//		
-//	}
-//	if(lat2<lat1 && lon2<lon1)
-//	{
-//		dir=2*PI+dir;
-//		
-//	}
 	sysState.direction=dir*R2D;
 	sysState.pitch=atan2((sysState.rmtalt-sysState.localt)/100.0,sysState.range)*R2D;
 	sysState.yaw=sysState.direction-sysState.lochdg/100.0;
@@ -76,7 +61,7 @@ void getDist()
 
 int main(void)
 {	
-	u8 i,j,k;	
+	u8 i,j,k;
 	u8 oled=0;
 
 	u8 t;
@@ -93,8 +78,7 @@ int main(void)
 	
 	
 	USART_ClearITPendingBit(USART1, USART_IT_RXNE);
-	OledClear(0);
-
+	OledClear(0);	
 	ParamRead();
 	if(params.headFlag!=0xCFCF||params.tailFlag!=0xFCFC)
 	{
@@ -106,8 +90,11 @@ int main(void)
 	OledDispString(0,0,"== Sharp Blade AAT ==",0);
 	OledDispString(1,3,"Telemetry baudrate?",0);
 	OledDispString(0,7,"115200          57600",0);
+	OledRefresh();
+
 	while(1)
 	{
+		
 		currKey=GPGetData();
 		if(currKey&KEY_A)
 		{
@@ -121,10 +108,19 @@ int main(void)
 		}
 			
 	}
+	
 	MainClockInit();
-	OledClear(0);
+	
 	PagesInit();
 	PagesChangeTo(AATPage);
+//	for(i=0;i<21;i++)
+//	{
+//		for(j=0;j<16;j++)
+//		{
+//			OledSetChar(i,j,'A'+i*j*2,0);
+//		}
+//	}
+	
 	while(1)
 	{		
 		if(tick[0]>100)
@@ -164,14 +160,22 @@ int main(void)
 			}			
 		}
 		
-		if(tick[2]>50)
+		if(tick[2]>100)
 		{
 			tick[2]=0;
 			currKey=GPGetData();
 			currWheel=WheelGetValue();
 			PagesUpdate();
 			lastKey=currKey;
-			lastWheel=currWheel;			
+			lastWheel=currWheel;
+//			oled++;
+//			
+//			oled&=0x0F;
+//			//OledClear(oled);
+//			
+//			OledDispString(0,0,"ASDFGHJKL",0);
+//			//OledRefresh();
+//			printf("%d\n",tick[2]);		
 		}		
 	}
 }

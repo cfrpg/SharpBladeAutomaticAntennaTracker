@@ -38,7 +38,8 @@ void servo_init(u8 f)
 	{
 		serset.cursorx=0;
 		serset.cursory=0;
-		serset.state=0;		
+		serset.state=0;	
+		return;		
 	}
 	serset.yawRng=(s16)params.yaw_range;
 	serset.pitRng=(s16)params.pitch_range;

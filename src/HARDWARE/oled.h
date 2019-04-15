@@ -24,7 +24,7 @@ void OledSetRev(u8 x,u8 y,s8 len,u8 f);
 void OledRefreshPart(u8 x,u8 y,s8 len);
 void OledDispChar(u8 x,u8 y,s8 c,u8 f);
 void OledDispString(u8 x,u8 y,s8 c[],u8 f);
-void OledDispInt(u8 x,u8 y,s32 v,u8 f);
+void OledDispInt(u8 x,u8 y,s32 v,u8 ml,u8 f);
 void OledDispFloat(u8 x,u8 y,float v,s8 len,s8 pre,u8 f);
-void OledDispFixed(u8 x,u8 y,s32 v,s8 pre,u8 f);
+void OledDispFixed(u8 x,u8 y,s32 v,s8 pre,u8 ml,u8 f);
 #endif

@@ -7,6 +7,7 @@ extern u8 mavlinkBuff[2][263];
 extern u8 mavlinkCurr;
 extern s16 mavlinkLen[2];
 extern u8 mavlinkReady;
+extern u16 cpucnt[5];
 
 typedef struct
 {

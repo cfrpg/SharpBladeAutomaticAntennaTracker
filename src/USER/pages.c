@@ -2,12 +2,7 @@
 
 
 void PagesInit(void)
-{
-	aat_init(1);
-	keytest_init(1);
-	flight_init(1);
-	servo_init(1);
-	
+{	
 	sysState.localt=0;
 	sysState.lochdg=0;
 	sysState.loclat=0;
@@ -19,6 +14,11 @@ void PagesInit(void)
 	sysState.rmtlon=0;
 	sysState.yaw=0;
 	sysState.enable=0;
+	
+	aat_init(1);
+	keytest_init(1);
+	flight_init(1);
+	servo_init(1);
 }
 
 void PagesChangeTo(u8 p)
@@ -91,10 +91,10 @@ void PagesDrawHeader(u8 n,u8 *name)
 	OledDispString(0,0,"=",0);
 	OledDispString(19,0,"=",0);
 	OledDispString(4,0,"/",0);
-	OledDispInt(5,0,PageNum,0);
+	OledDispInt(5,0,PageNum,0,0);
 	if(n>8)
-		OledDispInt(2,0,n+1,0);
+		OledDispInt(2,0,n+1,0,0);
 	else
-		OledDispInt(3,0,n+1,0);
+		OledDispInt(3,0,n+1,0,0);
 	OledDispString(8,0,name,0);
 }

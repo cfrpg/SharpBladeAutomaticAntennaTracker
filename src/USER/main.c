@@ -17,6 +17,7 @@
 #define PI 3.1415926535897932384626433
 
 u16 tick[3]={0,0,0};
+u16 cpucnt[5]={0,0,0,0,0};
 u8 package[263];
 u8 seq=0;
 
@@ -66,6 +67,9 @@ int main(void)
 
 	u8 t;
 	
+	u16 ct;
+	
+	//s32 tlon=0;
 	delay_init();
 	NVIC_Configuration();
 	uart_init(115200);
@@ -84,12 +88,13 @@ int main(void)
 	{
 		ParamReset();
 		ParamWrite();
-		OledDispString(1,2,"Setup parameters.",0);
+		OledDispString(1,3,"Setup parameters.",0);
 	}
+	
 	PWMInit();
 	OledDispString(0,0,"== Sharp Blade AAT ==",0);
-	OledDispString(1,3,"Telemetry baudrate?",0);
-	OledDispString(0,7,"115200          57600",0);
+	OledDispString(1,7,"Telemetry baudrate?",0);
+	OledDispString(0,15,"115200          57600",0);
 	OledRefresh();
 
 	while(1)
@@ -108,7 +113,10 @@ int main(void)
 		}
 			
 	}
-	
+//	while(GPGetData()==0);
+//	delay_ms(100);
+//	while(GPGetData()==0);
+	lastKey=0xFF;
 	MainClockInit();
 	
 	PagesInit();
@@ -117,27 +125,33 @@ int main(void)
 //	{
 //		for(j=0;j<16;j++)
 //		{
-//			OledSetChar(i,j,'A'+i*j*2,0);
+//			OledSetChar(i,j,'A'+i+j*2,0);
 //		}
 //	}
 	
 	while(1)
 	{		
-		if(tick[0]>100)
+		if(tick[0]>50)
 		{			
+			ct=cpucnt[0];
 			tick[0]=0;	
 			if(sysState.enable)
-			{
+			{	
+//				sysState.loclon=1089163112;			
+//				sysState.loclat=342424151;	
+//				sysState.localt=0;
 				getDist();
-				if(sysState.range>10)
+				if(sysState.range>params.min_range)
 				{
 					PWMSet(sysState.yaw,sysState.pitch);
 				}
 			}
+			cpucnt[3]+=(cpucnt[0]+1000-ct)%1000;
 		}
-		if(tick[1]>10)
+		if(tick[1]>20)
 		{
 			tick[1]=0;
+			ct=cpucnt[0];
 			if(mavlinkReady)
 			{				
 				memcpy(package,mavlinkBuff[mavlinkCurr],mavlinkLen[mavlinkCurr]);				
@@ -157,11 +171,21 @@ int main(void)
 					sysState.rmtalt=pospkg.relalt/10;
 					sysState.rmthdg=pospkg.hdg;
 				}
-			}			
+				sysState.rmtlat=342451468;
+				sysState.rmtlon=1089163112;
+				sysState.rmtalt=10;
+				sysState.rmthdg=0;
+			}
+			
+//			tlon+=500;
+//			if(tlon>20000)
+//				tlon=-20000;
+			cpucnt[1]+=(cpucnt[0]+1000-ct)%1000;
 		}
 		
-		if(tick[2]>100)
+		if(tick[2]>50)
 		{
+			ct=cpucnt[0];
 			tick[2]=0;
 			currKey=GPGetData();
 			currWheel=WheelGetValue();
@@ -174,9 +198,16 @@ int main(void)
 //			//OledClear(oled);
 //			
 //			OledDispString(0,0,"ASDFGHJKL",0);
-//			//OledRefresh();
-//			printf("%d\n",tick[2]);		
-		}		
+//			OledRefresh();
+//			printf("%d\n",tick[2]);	
+			cpucnt[2]+=(cpucnt[0]+1000-ct)%1000;			
+		}
+		if(cpucnt[0]>=1000)
+		{
+			printf("cpu Link:%d UI:%d Calc:%d Ekf:%d\r\n",cpucnt[1],cpucnt[2],cpucnt[3],cpucnt[4]);
+			for(i=0;i<5;i++)
+				cpucnt[i]=0;
+		}
 	}
 }
 
@@ -195,5 +226,6 @@ void TIM2_IRQHandler(void)
 		{
 			tick[n]++;
 		}
+		cpucnt[0]++;		
 	}
 }

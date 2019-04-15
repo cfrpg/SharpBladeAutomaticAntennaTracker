@@ -65,6 +65,7 @@ void USART3_IRQHandler(void)
 {	
 	u8 b;
 	u8 curr=mavlinkCurr^1;
+	u16 t=cpucnt[0];
 	if(USART_GetITStatus(USART3,USART_IT_RXNE) != RESET)
 	{		
 		USART_ClearITPendingBit(USART3,USART_IT_RXNE);		
@@ -129,7 +130,7 @@ void USART3_IRQHandler(void)
 				break;			
 		}
 				
-		
+		cpucnt[1]+=(cpucnt[0]+1000-t)%1000;
 	}
 }
 

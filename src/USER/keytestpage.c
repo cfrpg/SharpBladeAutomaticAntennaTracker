@@ -17,12 +17,13 @@ void keytest_init(u8 f)
 		keytest.e=0;
 		return;
 	}
+	sysState.enable=0;
 	OledClear(0);
 	PagesDrawHeader(KeyTestPage,"Test");
-	OledDispInt(5,1,params.pwm_pitch_max,0);
-	OledDispInt(5,2,params.pwm_pitch_min,0);
-	OledDispInt(5,3,params.pwm_yaw_max,0);
-	OledDispInt(5,3,params.pwm_yaw_min,0);
+	OledDispInt(5,1,params.pwm_pitch_max,6,0);
+	OledDispInt(5,2,params.pwm_pitch_min,6,0);
+	OledDispInt(5,3,params.pwm_yaw_max,6,0);
+	OledDispInt(5,3,params.pwm_yaw_min,6,0);
 }
 
 void keytest_update(void)
@@ -51,10 +52,10 @@ void keytest_update(void)
 		keytest.e--;
 	
 	PWMSet(0,keytest.e);
-	OledDispInt(0,1,keytest.a,0);
-	OledDispInt(0,2,keytest.b,0);
-	OledDispInt(0,3,keytest.c,0);
-	OledDispInt(0,4,keytest.e,0);	
+	OledDispInt(0,1,keytest.a,6,0);
+	OledDispInt(0,2,keytest.b,6,0);
+	OledDispInt(0,3,keytest.c,6,0);
+	OledDispInt(0,4,keytest.e,6,0);	
 	
 	
 	if(t&KEY_D)

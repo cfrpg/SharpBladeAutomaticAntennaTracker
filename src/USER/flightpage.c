@@ -15,9 +15,9 @@ void flight_init(u8 f)
 
 void flight_update(void)
 {
-	OledDispFixed(7,2,(s32)(attpkg.roll*5730000),5,0);
-	OledDispFixed(7,3,(s32)(attpkg.pitch*5730000),5,0);
-	OledDispFixed(7,4,(s32)(attpkg.yaw*5730000),5,0);
+	OledDispFixed(7,2,(s32)(attpkg.roll*5730000),5,10,0);
+	OledDispFixed(7,3,(s32)(attpkg.pitch*5730000),5,10,0);
+	OledDispFixed(7,4,(s32)(attpkg.yaw*5730000),5,10,0);
 	if(currWheel>lastWheel)
 		PagesNext(1);
 	if(currWheel<lastWheel)

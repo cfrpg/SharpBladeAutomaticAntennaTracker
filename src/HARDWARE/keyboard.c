@@ -57,6 +57,7 @@ u8 GPGetData()
 	}
 	GPSHIFT=0;
 	GPCLK=0;
+	//printf("key %d\r\n",res);
 	return res;
 }
 

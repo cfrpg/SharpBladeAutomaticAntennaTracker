@@ -24,6 +24,10 @@ typedef struct
 	u16 pwm_pitch_max;
 	u16 pwm_pitch_rev;
 	float min_range;
+	s32 aat_loc_lat;
+	s32 aat_loc_lon;
+	s32 aat_loc_alt;
+	s32 aat_loc_hdg;
 	u16 tailFlag;
 } ParameterSet;
 

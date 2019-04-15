@@ -38,16 +38,20 @@ u8 ParamWrite(void)
 
 void ParamReset(void)
 {
-	params.yaw_range=60;
+	params.yaw_range=80;
 	params.pwm_yaw_rev=1;
-	params.pwm_yaw_min=1000;
-	params.pwm_yaw_max=2000;
-	params.pwm_yaw_center=1500;
+	params.pwm_yaw_min=845;
+	params.pwm_yaw_max=2290;
+	params.pwm_yaw_center=1555;
 	params.pitch_range=90;
 	params.pwm_pitch_rev=1;
-	params.pwm_pitch_min=860;
-	params.pwm_pitch_max=1745;
+	params.pwm_pitch_min=930;
+	params.pwm_pitch_max=1840;
 	params.min_range=10;
+	params.aat_loc_lat=0;
+	params.aat_loc_lon=0;
+	params.aat_loc_hdg=0;
+	params.aat_loc_alt=0;
 	params.headFlag=0xCFCF;
 	params.tailFlag=0xFCFC;
 }

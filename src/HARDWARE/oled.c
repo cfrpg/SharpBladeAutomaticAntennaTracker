@@ -33,7 +33,7 @@ void OledInit(void)
 	si.SPI_CPOL=SPI_CPOL_Low;
 	si.SPI_CPHA=SPI_CPHA_1Edge;
 	si.SPI_NSS=SPI_NSS_Soft;
-	si.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_2;
+	si.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_4;
 	si.SPI_FirstBit=SPI_FirstBit_MSB;
 	si.SPI_CRCPolynomial=7;
 	SPI_Init(SPI1,&si);
@@ -261,10 +261,11 @@ void OledDispString(u8 x,u8 y,s8 c[],u8 f)
 	OledRefreshPart(x,y,t);
 }
 
-void OledDispInt(u8 x,u8 y,s32 v,u8 f)
+void OledDispInt(u8 x,u8 y,s32 v,u8 ml,u8 f)
 {
 	s8 buf[12],p=0,len=0;
 	s32 t;
+	buf[ml]=0;
 	if(v<0)
 	{
 		v=-v;
@@ -279,6 +280,11 @@ void OledDispInt(u8 x,u8 y,s32 v,u8 f)
 		len++;
 	}while(t>0);		
 	buf[len]=0;
+	while(ml>len)
+	{
+		buf[ml-1]=' ';
+		ml--;
+	}
 	len--;
 	while(len>=p)
 	{
@@ -294,10 +300,11 @@ void OledDispDouble(u8 x,u8 y,float v,s8 len,s8 pre,u8 f)
 	
 }
 
-void OledDispFixed(u8 x,u8 y,s32 v,s8 pre,u8 f)
+void OledDispFixed(u8 x,u8 y,s32 v,s8 pre,u8 ml,u8 f)
 {
 	s8 buf[14],p=0,len=0;
 	s32 t;
+	buf[ml]=0;
 	if(v<0)
 	{
 		v=-v;
@@ -314,7 +321,12 @@ void OledDispFixed(u8 x,u8 y,s32 v,s8 pre,u8 f)
 	if(p)
 		len++;
 	pre=len-pre;
-	buf[len+1]=0;
+	buf[len+1]=0;	
+	while(ml>len+1)
+	{
+		buf[ml-1]=' ';
+		ml--;
+	}		
 	while(len>=p)
 	{
 		if(len==pre)

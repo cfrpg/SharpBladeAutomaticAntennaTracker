@@ -1,0 +1,5 @@
+Added Component: Designator=X1(49SMD)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=OSCOUT Pin=X1-1
+Added Pin To Net: NetName=OSCIN Pin=X1-2
+Added Member To Class: ClassName=Sheet1 Member=Component X1 8M

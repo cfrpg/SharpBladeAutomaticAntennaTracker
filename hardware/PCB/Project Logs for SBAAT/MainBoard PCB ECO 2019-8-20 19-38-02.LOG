@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=VSSA Pin=C11-1
+Removed Pin From Net: NetName=VSSA Pin=C12-1
+Removed Pin From Net: NetName=VSSA Pin=U3-12
+Added Component: Designator=R12(0805)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=VSSA Pin=R12-2
+Change Net Name : Old Net Name=VSSA New Net Name=GND
+Added Pin To Net: NetName=VSSA Pin=C11-1
+Added Pin To Net: NetName=VSSA Pin=C12-1
+Added Pin To Net: NetName=VSSA Pin=R12-1
+Added Pin To Net: NetName=VSSA Pin=U3-12
+Added Net: Name=VSSA
+Added Member To Class: ClassName=Sheet1 Member=Component R12 0R

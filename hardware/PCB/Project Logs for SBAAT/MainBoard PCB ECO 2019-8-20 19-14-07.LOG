@@ -1,0 +1,6 @@
+Added Component: Designator=SW10(EC11)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=PA11 Pin=SW10-3
+Added Pin To Net: NetName=3V3 Pin=SW10-4
+Added Pin To Net: NetName=PA12 Pin=SW10-5
+Added Member To Class: ClassName=Sheet1 Member=Component SW10 EC11

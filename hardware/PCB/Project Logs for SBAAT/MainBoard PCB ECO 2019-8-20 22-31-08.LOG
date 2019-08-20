@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=T4CH3 Pin=P7-1
+Removed Pin From Net: NetName=T4CH4 Pin=P7-2
+Added Pin To Net: NetName=T4CH4 Pin=P7-1
+Added Pin To Net: NetName=T4CH3 Pin=P7-2
+Added Member To Class: ClassName=Sheet1 Member=Component U3 STM32F103R

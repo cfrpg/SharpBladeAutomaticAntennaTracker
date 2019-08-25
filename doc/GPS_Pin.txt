@@ -1,0 +1,6 @@
+红	Vcc
+黄	Rx
+绿	Tx
+黑	GND
+橙	SCL
+白	SDA

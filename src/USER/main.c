@@ -10,13 +10,14 @@
 #include "pages.h"
 #include "parameter.h"
 #include "pwm.h"
+#include "led.h"
 
 #define REarth 6378245.0
 #define D2R 0.0174532925199432957692369
 #define R2D 57.295779513082320876798154
 #define PI 3.1415926535897932384626433
 
-u16 tick[3]={0,0,0};
+u16 tick[4]={0,0,0,0};
 u16 cpucnt[5]={0,0,0,0,0};
 u8 package[263];
 u8 seq=0;
@@ -76,7 +77,7 @@ int main(void)
 	
 	OledInit();
 	KeyInit();
-	
+	LEDInit();
 	
 	currpage=255;
 	
@@ -202,11 +203,13 @@ int main(void)
 //			printf("%d\n",tick[2]);	
 			cpucnt[2]+=(cpucnt[0]+1000-ct)%1000;			
 		}
+		
 		if(cpucnt[0]>=1000)
 		{
 			printf("cpu Link:%d UI:%d Calc:%d Ekf:%d\r\n",cpucnt[1],cpucnt[2],cpucnt[3],cpucnt[4]);
 			for(i=0;i<5;i++)
 				cpucnt[i]=0;
+			LEDFlip();
 		}
 	}
 }
@@ -221,7 +224,7 @@ void TIM2_IRQHandler(void)
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)  //检查TIM3更新中断发生与否
 	{
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx更新中断标志 
-		u8 n=3;
+		u8 n=4;
 		while(n--)
 		{
 			tick[n]++;

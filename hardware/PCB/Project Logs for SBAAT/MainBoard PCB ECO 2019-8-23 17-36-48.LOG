@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=PC6 Pin=U2-3
+Removed Pin From Net: NetName=PC7 Pin=U2-7
+Added Component: Designator=C18(0805)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=3V3 Pin=C18-1
+Added Pin To Net: NetName=GND Pin=C18-2
+Added Pin To Net: NetName=3V3 Pin=U2-3
+Added Pin To Net: NetName=3V3 Pin=U2-7
+Added Member To Class: ClassName=Sheet1 Member=Component C18 104

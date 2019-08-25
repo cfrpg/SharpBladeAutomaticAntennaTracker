@@ -8,29 +8,33 @@ void KeyInit(void)
 	EXTI_InitTypeDef ei;
 	NVIC_InitTypeDef ni;
 	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOA,ENABLE);
-	gi.GPIO_Pin=GPIO_Pin_13|GPIO_Pin_14;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOC,ENABLE);
+	gi.GPIO_Pin=GPIO_Pin_9;
 	gi.GPIO_Mode=GPIO_Mode_Out_PP;
 	gi.GPIO_Speed=GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB,&gi);
-	
-	gi.GPIO_Pin=GPIO_Pin_12|GPIO_Pin_15;
-	gi.GPIO_Mode=GPIO_Mode_IN_FLOATING;
-	gi.GPIO_Speed=GPIO_Speed_50MHz;	
-	GPIO_Init(GPIOB,&gi);
+	GPIO_Init(GPIOC,&gi);
+	gi.GPIO_Pin=GPIO_Pin_8;
+	GPIO_Init(GPIOA,&gi);
 	
 	gi.GPIO_Pin=GPIO_Pin_8;
+	gi.GPIO_Mode=GPIO_Mode_IN_FLOATING;
+	gi.GPIO_Speed=GPIO_Speed_50MHz;	
+	GPIO_Init(GPIOC,&gi);
+	gi.GPIO_Pin=GPIO_Pin_12;
+	GPIO_Init(GPIOA,&gi);
+	
+	gi.GPIO_Pin=GPIO_Pin_11;
 	gi.GPIO_Mode=GPIO_Mode_IPU;
 	GPIO_Init(GPIOA,&gi);
 	
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource8);
-	ei.EXTI_Line=EXTI_Line8;
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource11);
+	ei.EXTI_Line=EXTI_Line11;
 	ei.EXTI_Mode=EXTI_Mode_Interrupt;
 	ei.EXTI_Trigger=EXTI_Trigger_Falling;
 	ei.EXTI_LineCmd=ENABLE;
 	EXTI_Init(&ei);
 	
-	ni.NVIC_IRQChannel=EXTI9_5_IRQn;
+	ni.NVIC_IRQChannel=EXTI15_10_IRQn;
 	ni.NVIC_IRQChannelCmd=ENABLE;
 	ni.NVIC_IRQChannelPreemptionPriority=2;
 	ni.NVIC_IRQChannelSubPriority=3;
@@ -61,7 +65,7 @@ u8 GPGetData()
 	return res;
 }
 
-void EXTI9_5_IRQHandler(void)
+void EXTI15_10_IRQHandler(void)
 {
 	if(WHEEL)
 	{
@@ -71,7 +75,7 @@ void EXTI9_5_IRQHandler(void)
 	{
 		value--;
 	}
-	EXTI_ClearITPendingBit(EXTI_Line8);
+	EXTI_ClearITPendingBit(EXTI_Line11);
 }
 
 s32 WheelGetValue(void)

@@ -11,6 +11,10 @@
 #include "parameter.h"
 #include "pwm.h"
 #include "led.h"
+#include "mb85rs.h"
+#include "gps.h"
+#include "i2c.h"
+#include "hmc5883l.h"
 
 #define REarth 6378245.0
 #define D2R 0.0174532925199432957692369
@@ -70,6 +74,10 @@ int main(void)
 	
 	u16 ct;
 	
+	s16 tmp[3];
+	float mag[3];
+	
+	
 	//s32 tlon=0;
 	delay_init();
 	NVIC_Configuration();
@@ -78,12 +86,17 @@ int main(void)
 	OledInit();
 	KeyInit();
 	LEDInit();
+	FRAMInit();
+	//GPSInit(9600);
+	I2CInit();
+	HMC5883Init();
 	
 	currpage=255;
 	
 	
 	USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 	OledClear(0);	
+	
 	ParamRead();
 	if(params.headFlag!=0xCFCF||params.tailFlag!=0xFCFC)
 	{
@@ -97,11 +110,12 @@ int main(void)
 	OledDispString(1,7,"Telemetry baudrate?",0);
 	OledDispString(0,15,"115200          57600",0);
 	OledRefresh();
-
+	
 	while(1)
 	{
-		
+		//printf("%x\r\n",currKey);
 		currKey=GPGetData();
+		//printf("%x\r\n",currKey);
 		if(currKey&KEY_A)
 		{
 			MavlinkInit(115200);
@@ -206,11 +220,20 @@ int main(void)
 		
 		if(cpucnt[0]>=1000)
 		{
-			printf("cpu Link:%d UI:%d Calc:%d Ekf:%d\r\n",cpucnt[1],cpucnt[2],cpucnt[3],cpucnt[4]);
+			//printf("cpu Link:%d UI:%d Calc:%d Ekf:%d\r\n",cpucnt[1],cpucnt[2],cpucnt[3],cpucnt[4]);
 			for(i=0;i<5;i++)
 				cpucnt[i]=0;
 			LEDFlip();
+			HMC5883ReadData(tmp);
+			printf("%d %d %d\r\n",tmp[0],tmp[1],tmp[2]);
+			double a=atan2(tmp[0],tmp[2])*R2D+180;
+			//printf("%f\r\n",a);
 		}
+//		if(gpsReady)
+//		{
+//			printf("%s",gpsBuff[gpsCurrBuff]);
+//			gpsReady=0;
+//		}
 	}
 }
 

@@ -54,3 +54,5 @@ dkms.conf
 *.crf
 /src/OBJ/
 /hardware/PCB/History/
+/hardware/PCB/Project Logs for SBAAT/
+/hardware/PCB/Project Outputs for SBAAT/

@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -616,6 +616,46 @@
               <FileName>led.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\HARDWARE\led.h</FilePath>
+            </File>
+            <File>
+              <FileName>mb85rs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\mb85rs.c</FilePath>
+            </File>
+            <File>
+              <FileName>mb85rs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\mb85rs.h</FilePath>
+            </File>
+            <File>
+              <FileName>gps.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\gps.c</FilePath>
+            </File>
+            <File>
+              <FileName>gps.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\gps.h</FilePath>
+            </File>
+            <File>
+              <FileName>hmc5883l.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\hmc5883l.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmc5883l.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\hmc5883l.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\i2c.h</FilePath>
             </File>
           </Files>
         </Group>

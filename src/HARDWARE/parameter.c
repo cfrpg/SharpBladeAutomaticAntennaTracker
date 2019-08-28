@@ -1,4 +1,5 @@
 #include "parameter.h"
+#include "mb85rs.h"
 
 ParameterSet params;
 
@@ -10,29 +11,31 @@ u16 readHalfWord(u32 addr)
 
 u8 ParamRead(void)
 {
-	u16 *data=(u16*)(&params);
-	u16 i;
-	for(i=0;i<sizeof(params)/2;i++)
-	{
-		data[i]=readHalfWord(FLASH_BASE+TGT_SECTOR_ADDR+i*2);
-	}
+//	u16 *data=(u16*)(&params);
+//	u16 i;
+//	for(i=0;i<sizeof(params)/2;i++)
+//	{
+//		data[i]=readHalfWord(FLASH_BASE+TGT_SECTOR_ADDR+i*2);
+//	}
+	FRAMRead(0,sizeof(params),(u8*)(&params));
 	return 0;
 }
 
 
 u8 ParamWrite(void)
 {
-	u16 *data;
-	u16 i;
-	FLASH_Unlock();
-	u32 sectorAddr=FLASH_BASE+TGT_SECTOR_ADDR;
-	FLASH_ErasePage(sectorAddr);
-	data=(u16*)(&params);
-	for(i=0;i<sizeof(params)/2;i++)
-	{
-		FLASH_ProgramHalfWord(sectorAddr+i*2,data[i]);
-	}
-	FLASH_Lock();
+//	u16 *data;
+//	u16 i;
+//	FLASH_Unlock();
+//	u32 sectorAddr=FLASH_BASE+TGT_SECTOR_ADDR;
+//	FLASH_ErasePage(sectorAddr);
+//	data=(u16*)(&params);
+//	for(i=0;i<sizeof(params)/2;i++)
+//	{
+//		FLASH_ProgramHalfWord(sectorAddr+i*2,data[i]);
+//	}
+//	FLASH_Lock();
+	FRAMWrite(0,sizeof(params),(u8*)(&params));
 	return 0;
 }
 

@@ -161,7 +161,7 @@ void OledRefresh(void)
 	u8 i,j,k,l;
 	u16 m;
 	u8 c;
-	oledSelectRect(0,127,0,63);
+	oledSelectRect(0,127,0,62);
 	OLED_DC=OLED_DATA;
 	for(j=0;j<21;j++)
 	{
@@ -185,6 +185,37 @@ void OledRefresh(void)
 			}
 		}		
 	}	
+}
+
+//垂直扫描
+void OledDispBitmap(u8 x,u8 y,u8 w,u8 h,u8* data)
+{
+	u8 i,j,c;
+	s8 k;
+	u16 size,t;
+	u8 bh=h/8;
+	oledSelectRect(y,y+h-1,x>>1,(x+w-1)<<1);
+	size=w;
+	size*=h;
+	OLED_DC=OLED_DATA;
+	for(i=0;i<w;i+=2)
+	{
+		for(j=0;j<bh;j++)
+		{
+			t=i;
+			t=t*bh+j;			
+			for(k=7;k>=0;k--)
+			{
+				c=0;
+				if(data[t]&(1<<k))
+					c=0xF0;
+				if(data[t+bh]&(1<<k))
+					c|=0x0F;
+				OledSendByte(c);
+			}
+		}
+		
+	}
 }
 
 void OledSetChar(u8 x,u8 y,s8 c,u8 f)

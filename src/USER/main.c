@@ -15,6 +15,7 @@
 #include "gps.h"
 #include "i2c.h"
 #include "hmc5883l.h"
+#include "logo.h"
 
 #define REarth 6378245.0
 #define D2R 0.0174532925199432957692369
@@ -77,20 +78,18 @@ int main(void)
 	s16 tmp[3];
 	float mag[3];
 	
-	
+	//printf("1\r\n");
 	//s32 tlon=0;
 	delay_init();
 	NVIC_Configuration();
-	uart_init(115200);
-	
-	OledInit();
-	KeyInit();
-	LEDInit();
+	uart_init(115200);	
+	OledInit();	
+	KeyInit();	
+	LEDInit();	
 	FRAMInit();
-	//GPSInit(9600);
+	GPSInit(9600);
 	I2CInit();
-	HMC5883Init();
-	
+	HMC5883Init();	
 	currpage=255;
 	
 	
@@ -98,6 +97,7 @@ int main(void)
 	OledClear(0);	
 	
 	ParamRead();
+	
 	if(params.headFlag!=0xCFCF||params.tailFlag!=0xFCFC)
 	{
 		ParamReset();
@@ -106,6 +106,12 @@ int main(void)
 	}
 	
 	PWMInit();
+	
+	OledDispBitmap(0,0,128,128,gImage_pb);
+	OledDispString(5,15,"PAPER BIRD",0);
+	for(i=0;i<20;i++)
+		delay_ms(500);
+	OledClear(0);
 	OledDispString(0,0,"== Sharp Blade AAT ==",0);
 	OledDispString(1,7,"Telemetry baudrate?",0);
 	OledDispString(0,15,"115200          57600",0);
@@ -150,6 +156,12 @@ int main(void)
 		{			
 			ct=cpucnt[0];
 			tick[0]=0;	
+			HMC5883ReadData(sysState.magdata);
+			sysState.magdata[0]=(sysState.magdata[0]-params.mag_x_offset)/params.mag_x_scale;
+			sysState.magdata[2]=(sysState.magdata[2]-params.mag_y_offset)/params.mag_y_scale;
+			sysState.azimuth=atan2(sysState.magdata[0],sysState.magdata[2])*R2D+180-params.mag_azi_offset;
+			if(sysState.azimuth<0)
+				sysState.azimuth+=360;
 			if(sysState.enable)
 			{	
 //				sysState.loclon=1089163112;			
@@ -162,6 +174,7 @@ int main(void)
 				}
 			}
 			cpucnt[3]+=(cpucnt[0]+1000-ct)%1000;
+			//printf("a\r\n");
 		}
 		if(tick[1]>20)
 		{
@@ -224,16 +237,16 @@ int main(void)
 			for(i=0;i<5;i++)
 				cpucnt[i]=0;
 			LEDFlip();
-			HMC5883ReadData(tmp);
-			printf("%d %d %d\r\n",tmp[0],tmp[1],tmp[2]);
-			double a=atan2(tmp[0],tmp[2])*R2D+180;
-			//printf("%f\r\n",a);
+			//HMC5883ReadData(tmp);
+			//printf("%d %d %d %f\r\n",sysState.magdata[0],sysState.magdata[1],sysState.magdata[2],sysState.azimuth);
+			//double a=atan2(sysState.magdata[0],sysState.magdata[2])*R2D+180;
+			//printf("%f\r\n",sysState.azimuth);
 		}
-//		if(gpsReady)
-//		{
-//			printf("%s",gpsBuff[gpsCurrBuff]);
-//			gpsReady=0;
-//		}
+		if(gpsReady)
+		{
+			printf("%s",gpsBuff[gpsCurrBuff]);
+			gpsReady=0;
+		}
 	}
 }
 
@@ -248,6 +261,7 @@ void TIM2_IRQHandler(void)
 	{
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx更新中断标志 
 		u8 n=4;
+		//printf("a\r\n");
 		while(n--)
 		{
 			tick[n]++;

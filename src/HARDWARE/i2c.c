@@ -16,7 +16,7 @@ void I2CInit(void)
 
 void i2cDelay(void)
 {
-	delay_us(2);
+	delay_us(4);
 }
 
 void I2CStart(void)

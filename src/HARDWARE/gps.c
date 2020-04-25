@@ -1,4 +1,5 @@
 #include "gps.h"
+#include "stdio.h"
 
 u8 gpsBuff[2][256];
 u8 gpsBuffLen[2];
@@ -35,7 +36,7 @@ void GPSInit(u16 baud)
 	
 	USART_Cmd(UART5, ENABLE);
 	
-	//ni.NVIC_IRQChannel=UART5_IRQn;
+	ni.NVIC_IRQChannel=UART5_IRQn;
 	ni.NVIC_IRQChannelPreemptionPriority=2;
 	ni.NVIC_IRQChannelSubPriority=1;
 	ni.NVIC_IRQChannelCmd=ENABLE;
@@ -55,7 +56,7 @@ void UART5_IRQHandler(void)
 	u8 curr;
 	if(USART_GetITStatus(UART5, USART_IT_RXNE) != RESET)
 	{
-		printf("rx\r\n");
+		//printf("rx\r\n");
 		res =USART_ReceiveData(UART5);
 		USART_ClearITPendingBit(UART5,USART_IT_RXNE);		
 		curr=gpsCurrBuff^1;

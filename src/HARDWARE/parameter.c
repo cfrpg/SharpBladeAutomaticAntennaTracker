@@ -55,6 +55,11 @@ void ParamReset(void)
 	params.aat_loc_lon=0;
 	params.aat_loc_hdg=0;
 	params.aat_loc_alt=0;
+	params.mag_x_offset=0;
+	params.mag_x_scale=1;
+	params.mag_y_offset=0;
+	params.mag_y_scale=1;
+	params.mag_azi_offset=0;
 	params.headFlag=0xCFCF;
 	params.tailFlag=0xFCFC;
 }

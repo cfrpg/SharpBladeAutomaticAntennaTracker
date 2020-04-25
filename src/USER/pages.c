@@ -19,6 +19,7 @@ void PagesInit(void)
 	keytest_init(1);
 	flight_init(1);
 	servo_init(1);
+	gps_init(1);
 }
 
 void PagesChangeTo(u8 p)
@@ -40,6 +41,9 @@ void PagesChangeTo(u8 p)
 			break;
 			case ServoPage:
 				servo_init(0);
+			break;
+			case GPSPage:
+				gps_init(0);
 			break;
 			default:
 				currpage=AATPage;
@@ -77,6 +81,9 @@ void PagesUpdate(void)
 		break;
 		case ServoPage:
 			servo_update();
+		break;
+		case GPSPage:
+			gps_update();
 		break;
 		default:
 			currpage=AATPage;

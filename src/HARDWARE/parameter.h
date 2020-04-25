@@ -28,6 +28,11 @@ typedef struct
 	s32 aat_loc_lon;
 	s32 aat_loc_alt;
 	s32 aat_loc_hdg;
+	double mag_x_scale;
+	s16 mag_x_offset;
+	double mag_y_scale;
+	s16 mag_y_offset;
+	double mag_azi_offset;
 	u16 tailFlag;
 } ParameterSet;
 

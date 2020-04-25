@@ -6,10 +6,11 @@
 #include "keyboard.h"
 
 #define PageNum 4
-#define KeyTestPage 3
+#define KeyTestPage 4
 #define AATPage 0
 #define FlightPage 1
 #define ServoPage 2
+#define GPSPage 3
 
 typedef struct
 {
@@ -25,6 +26,8 @@ typedef struct
 	float pitch;
 	double range;
 	double direction;
+	s16 magdata[3];
+	double azimuth;
 	u8 enable;
 } systemState;
 
@@ -55,6 +58,9 @@ void flight_init(u8 f);
 
 void servo_init(u8 f);
 void servo_update(void);
+
+void gps_init(u8 f);
+void gps_update(void);
 
 
 #endif
